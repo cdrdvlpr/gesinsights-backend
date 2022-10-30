@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
+const bcryptjs = require("bcryptjs");
 const validator = require("validator");
 
 const Schema = mongoose.Schema;
@@ -36,8 +36,8 @@ userSchema.statics.signup = async function (email, password) {
     throw Error("Email already in use! :(");
   }
 
-  const salt = await bcrypt.genSalt(10);
-  const hash = await bcrypt.hash(password, salt);
+  const salt = await bcryptjs.genSalt(10);
+  const hash = await bcryptjs.hash(password, salt);
 
   const user = await this.create({ email, password: hash });
 
@@ -56,7 +56,7 @@ userSchema.statics.login = async function (email, password) {
     throw Error("User does not exist! :( Try signing up for a new account.");
   }
 
-  const match = await bcrypt.compare(password, user.password);
+  const match = await bcryptjs.compare(password, user.password);
 
   if (!match) {
     throw Error("Password is incorrect! :( Make sure caps-lock is off.");
