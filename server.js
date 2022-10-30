@@ -14,7 +14,7 @@ app.use(express.json());
 
 // Cross Origin Resource Sharing
 app.use((req, res, next) => {
-  const corsWhitelist = ["https://gesinsights.onrender.com","http://localhost:3000"];
+  const corsWhitelist = ["*"];
 
   if (corsWhitelist.includes(req.headers.origin)) {
     res.header("Access-Control-Allow-Origin", req.headers.origin);
